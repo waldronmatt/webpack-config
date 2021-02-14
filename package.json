@@ -6,12 +6,20 @@
   "scripts": {
     "test": "echo \"No test specified\""
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waldronmatt/webpack-config.git"
+  },
   "keywords": [
     "webpack",
     "config"
   ],
   "author": "Matthew Waldron",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/waldronmatt/webpack-config/issues"
+  },
+  "homepage": "https://github.com/waldronmatt/webpack-config#readme",
   "devDependencies": {
     "prettier": "^2.2.1"
   },

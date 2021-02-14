@@ -1,4 +1,3 @@
-const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const commonConfig = (isProduction) => {
@@ -35,8 +34,6 @@ const commonConfig = (isProduction) => {
 
   return {
     output: {
-      // output directory as an absolute path.
-      path: path.join(__dirname, '../dist'),
       // specifies the public URL of the output directory when referenced in a browser.
       publicPath: '/',
       filename: isProduction ? '[name].[contenthash:8].js' : '[name].js',

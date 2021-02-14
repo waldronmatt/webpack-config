@@ -4,54 +4,9 @@ A shareable webpack configuration
 
 ## Introduction
 
-My personal shareable webpack configuration for front end projects.
+My personal shareable webpack configuration for front end projects that support `.js`, `.css`, `.scss`, font, and image files.
 
 You can add and/or override defaults with your own configurations.
-
-## File Configurations
-
-### `webpack.dev.js`
-
-#### Core Configs and Optimizations
-
-- Configurations
-  - mode: `development`
-  - devtool: `inline-source-map`
-  - optimizations for development builds
-
-### `webpack.prod.js`
-
-#### Core Configs and Minification
-
-- Configurations
-  - mode: `production`
-  - devtool: `false`
-  - minimize: `true`
-- Plugins
-  - terser-webpack-plugin (included with webpack)
-  - css-minimizer-webpack-plugin
-  - imagemin-webpack-plugin
-
-### `webpack.common.js`
-
-#### JS, CSS, Sass, Font, and Image Loaders and Output Configs
-
-- Configurations
-  - path
-  - publicPath
-  - filename
-  - chunkFilename
-  - asset/inline (images)
-  - asset/resource (fonts)
-- Plugins
-  - mini-css-extract-plugin
-- Loaders
-  - babel-loader
-  - css-loader
-  - postcss-loader
-  - sass-loader
-  - style-loader
-  - mini-css-extract-plugin (loader)
 
 ## Install
 
@@ -59,23 +14,28 @@ You can add and/or override defaults with your own configurations.
 npm i --save-dev https://github.com/waldronmatt/webpack-config
 ```
 
-## Usage
+Install additional packages to meet project and loader requirements:
 
-The setup assumes your configurations are split into dev, prod, and common configuration files.
+**`webpack`**
 
-```js
-/
-    scripts/
-        webpack.common.js
-        webpack.dev.js
-        webpack.production.js
+```bash
+npm i --save-dev webpack webpack-cli webpack-merge
 ```
+
+**`babel-loader`**
+
+```bash
+npm i --save-dev @babel/preset-env @babel/runtime @babel/plugin-transform-runtime
+```
+
+## Usage
 
 **`package.json`**
 
-```js
-"dev": "webpack serve --env development --config ./scripts/webpack.dev.js",
-"build": "webpack --env production --config ./scripts/webpack.prod.js",
+```bash
+"dev": "webpack --env development --config webpack.dev.js",
+"build": "webpack --env production --config webpack.prod.js",
+...
 ```
 
 **`webpack.common.js`**
@@ -117,11 +77,9 @@ module.exports = extendWebpackBaseConfig(commonConfig, productionConfig);
 
 ## Options
 
-Use **`isProduction`** to check the current environment and apply some additional logic in `webpack.common.js`.
+Use **`isProduction`** to check the current environment and apply some conditional logic in `webpack.common.js`.
 
-An example use case is to use `mini-css-extract-plugin` for production builds to extract css into separate files.
-
-(Code is from this repo's configuration)
+The benefit to this approach is to keep 'locically grouped' configurations together.
 
 **`webpack.common.js`**
 
@@ -159,27 +117,70 @@ const commonConfig = (isProduction) => {
 module.exports = commonConfig;
 ```
 
-The benefit to this approach is to keep 'locically grouped' configurations together.
+## File Configurations
 
-In the example above, we are able to keep our loader configurations together in the same file.
+A detailed look at what is included:
+
+### `webpack.dev.js`
+
+#### Core Configs and Optimizations
+
+- Defaults
+  - mode: `development`
+  - devtool: `inline-source-map`
+  - minimize: `false`
+  - optimizations for development builds
+
+### `webpack.prod.js`
+
+#### Core Configs and Minification
+
+- Defaults
+  - mode: `production`
+  - devtool: `false`
+  - minimize: `true`
+- Plugins
+  - `terser-webpack-plugin` (included with webpack)
+  - `css-minimizer-webpack-plugin`
+  - `imagemin-webpack-plugin`
+
+### `webpack.common.js`
+
+#### JS, CSS, Sass, Font, and Image Loaders and Output Configs
+
+- Defaults
+  - publicPath: `/`
+  - filename: `isProduction ? '[name].[contenthash:8].js' : '[name].js',`
+  - chunkFilename: `isProduction ? '[name].[contenthash:8].js' : '[name].js',`
+- Plugins
+  - `mini-css-extract-plugin`
+- Loaders
+  - `babel-loader`
+  - `css-loader`
+  - `postcss-loader` (with `autoprefixer`)
+  - `sass-loader` (depends on `dart-sass`)
+  - `style-loader`
+  - `mini-css-extract-plugin.loader`
+  - `asset/inline` (images)
+  - `asset/resource` (fonts)
 
 ## Notes
 
-My personal preferences for webpack overrides when extending this library:
+My personal preferences for custom webpack configurations when extending this library:
 
 ### Custom App:
 
 ### `webpack.dev.js`
 
-#### Development Server Configs, HMR, and Linting Plugins
+Development Server Configurations and Linting Plugins
 
 ### `webpack.prod.js`
 
-#### Code Splitting Optimizations (splitchunks, tree-shaking, etc)
+Code Splitting Optimizations (splitchunks, tree-shaking, etc.)
 
 ### `webpack.common.js`
 
-#### Entry Points & everything else (html-webpack-plugin, extra loaders, etc)
+Entry Points, Output Path Resolution, and Misc. (html-webpack-plugin, extra loaders, etc.)
 
 ## Contributing
 

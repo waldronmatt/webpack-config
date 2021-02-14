@@ -11,7 +11,7 @@ You can add and/or override defaults with your own configurations.
 ## Install
 
 ```bash
-npm i --save-dev https://github.com/waldronmatt/webpack-config
+npm i --save-dev @waldronmatt/webpack-config
 ```
 
 Install additional packages to meet project and loader requirements:
@@ -35,9 +35,9 @@ npm i --save-dev @babel/preset-env @babel/runtime @babel/plugin-transform-runtim
 ```bash
 "dev": "webpack --env development --config webpack.dev.js",
 "build": "webpack --env production --config webpack.prod.js",
-...
 ```
 
+\
 **`webpack.common.js`**
 
 ```js
@@ -53,7 +53,7 @@ module.exports = commonConfig;
 
 ```js
 const commonConfig = require('./webpack.common.js');
-const extendWebpackBaseConfig = require('webpack-config');
+const extendWebpackBaseConfig = require('@waldronmatt/webpack-config');
 
 const developmentConfig = {
     ...
@@ -62,11 +62,12 @@ const developmentConfig = {
 module.exports = extendWebpackBaseConfig(commonConfig, developmentConfig);
 ```
 
+\
 **`webpack.production.js`**
 
 ```js
 const commonConfig = require('./webpack.common.js');
-const extendWebpackBaseConfig = require('webpack-config');
+const extendWebpackBaseConfig = require('@waldronmatt/webpack-config');
 
 const productionConfig = {
     ...
@@ -79,7 +80,7 @@ module.exports = extendWebpackBaseConfig(commonConfig, productionConfig);
 
 Use **`isProduction`** to check the current environment and apply some conditional logic in `webpack.common.js`.
 
-The benefit to this approach is to keep 'locically grouped' configurations together.
+The benefit to this approach is to keep 'locically grouped' configurations together:
 
 **`webpack.common.js`**
 
@@ -98,19 +99,15 @@ const commonConfig = (isProduction) => {
     ];
 
     return {
-       module: {
-          rules: [
-            {
-              test: /\.css$/,
-              use: styleLoaders,
-            },
-            ...
-          ],
-        },
-        plugins: [
-            isProduction ? miniCssExtract() : false,
-            ...
-        ].filter(Boolean),
+      module: {
+        rules: [
+          {
+            test: /\.css$/,
+            use: styleLoaders,
+          },
+          ...
+        ],
+      },
     }
 };
 
@@ -123,8 +120,6 @@ A detailed look at what is included:
 
 ### `webpack.dev.js`
 
-#### Core Configs and Optimizations
-
 - Defaults
   - mode: `development`
   - devtool: `inline-source-map`
@@ -132,8 +127,6 @@ A detailed look at what is included:
   - optimizations for development builds
 
 ### `webpack.prod.js`
-
-#### Core Configs and Minification
 
 - Defaults
   - mode: `production`
@@ -146,8 +139,6 @@ A detailed look at what is included:
 
 ### `webpack.common.js`
 
-#### JS, CSS, Sass, Font, and Image Loaders and Output Configs
-
 - Defaults
   - publicPath: `/`
   - filename: `isProduction ? '[name].[contenthash:8].js' : '[name].js',`
@@ -158,7 +149,7 @@ A detailed look at what is included:
   - `babel-loader`
   - `css-loader`
   - `postcss-loader` (with `autoprefixer`)
-  - `sass-loader` (depends on `dart-sass`)
+  - `sass-loader` (depends on `sass` and `dart-sass`)
   - `style-loader`
   - `mini-css-extract-plugin.loader`
   - `asset/inline` (images)
@@ -170,17 +161,11 @@ My personal preferences for custom webpack configurations when extending this li
 
 ### Custom App:
 
-### `webpack.dev.js`
+**`webpack.dev.js`** - Development Server Configurations and Linting Plugins
 
-Development Server Configurations and Linting Plugins
+**`webpack.prod.js`** - Code Splitting Optimizations (splitchunks, tree-shaking, etc.)
 
-### `webpack.prod.js`
-
-Code Splitting Optimizations (splitchunks, tree-shaking, etc.)
-
-### `webpack.common.js`
-
-Entry Points, Output Path Resolution, and Misc. (html-webpack-plugin, extra loaders, etc.)
+**`webpack.common.js`** - Entry Points, Output Path Resolution, and Misc. (html-webpack-plugin, extra loaders, etc.)
 
 ## Contributing
 

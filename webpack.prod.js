@@ -14,6 +14,9 @@ const productionConfig = {
       new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),
     ],
   },
+  performance: {
+    hints: 'warning',
+  },
 };
 
 module.exports = productionConfig;

@@ -98,6 +98,7 @@ A detailed look at what is included:
   - mode: `development`
   - devtool: `inline-source-map`
   - minimize: `false`
+  - performance hints: `false`
   - optimizations for development builds
 
 ### `webpack.prod.js`
@@ -106,6 +107,7 @@ A detailed look at what is included:
   - mode: `production`
   - devtool: `false`
   - minimize: `true`
+  - performance hints: `warning`
 - Plugins
   - `terser-webpack-plugin` (included with webpack)
   - `css-minimizer-webpack-plugin`
@@ -135,11 +137,11 @@ A detailed look at what is included:
 
 My personal preferences for how I configure and group per-app custom configurations when extending this library:
 
-**`webpack.dev.js`** - Development Server Configurations and Linting Plugins
+**`webpack.dev.js`** - Development Server Configurations, Linting Plugins, Progress Output
 
 **`webpack.prod.js`** - Code Splitting Optimizations (splitchunks, tree-shaking, etc.)
 
-**`webpack.common.js`** - Entry Points, Output Path Resolution, and Misc. (html-webpack-plugin, extra loaders, etc.)
+**`webpack.common.js`** - Entry Points, Output Path Resolution, HtmlWebpackPlugin Configurations, and Misc. (extra loaders, plugins, etc.)
 
 ## Contributing
 

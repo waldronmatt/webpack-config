@@ -10,6 +10,9 @@ const developmentConfig = {
     removeEmptyChunks: false,
     splitChunks: false,
   },
+  performance: {
+    hints: false,
+  },
 };
 
 module.exports = developmentConfig;

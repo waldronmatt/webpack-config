@@ -12,6 +12,14 @@
   },
   "keywords": [
     "webpack",
+    "bundle",
+    "plugins",
+    "minification",
+    "loaders",
+    "webpack-config",
+    "shareable",
+    "webpack5",
+    "shareable-config",
     "config"
   ],
   "author": "Matthew Waldron",

@@ -40,6 +40,10 @@ const commonConfig = (isProduction) => {
       // specify chunck path for code splitted files
       chunkFilename: isProduction ? '[name].[contenthash:8].js' : '[name].js',
     },
+    // change defaults to accept other file types should we use additional loaders when extending
+    resolve: {
+      extensions: ['.js', '.ts', 'jsx', '.tsx', '.json'],
+    },
     module: {
       rules: [
         {
@@ -79,6 +83,16 @@ const commonConfig = (isProduction) => {
     plugins: [isProduction ? miniCssExtract() : false]
       // remove empty elements from config (a.k.a. miniCssExtract in dev mode)
       .filter(Boolean),
+    optimization: {
+      /*
+        The value 'single' instead creates a runtime file to be shared for all generated chunks.
+        https://webpack.js.org/guides/caching/#extracting-boilerplate
+
+        Required to get multiple entry chunks to hmr with webpack-dev-server
+        https://github.com/webpack/webpack-dev-server/issues/2792
+      */
+      runtimeChunk: 'single',
+    },
   };
 };
 

@@ -4,9 +4,15 @@ A shareable webpack configuration
 
 ## Introduction
 
-My personal shareable webpack configuration for front end projects that support `.js`, `.css`, `.scss`, font, and image files.
+My personal shareable webpack configuration for front end projects.
 
 You can add and/or override defaults with your own configurations.
+
+## Features
+
+- Load JavaScript, CSS, Sass, Font, and Image Files
+- Optimization defaults for development builds
+- Minification for production builds
 
 ## Install
 
@@ -80,39 +86,7 @@ module.exports = extendWebpackBaseConfig(commonConfig, productionConfig);
 
 Use **`isProduction`** to check the current environment and apply some conditional logic in `webpack.common.js`.
 
-The benefit to this approach is to keep 'locically grouped' configurations together:
-
-**`webpack.common.js`**
-
-```js
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-const commonConfig = (isProduction) => {
-
-    const styleLoaders = [
-        {
-          loader: isProduction
-            ? MiniCssExtractPlugin.loader
-            : 'style-loader',
-        },
-        ...
-    ];
-
-    return {
-      module: {
-        rules: [
-          {
-            test: /\.css$/,
-            use: styleLoaders,
-          },
-          ...
-        ],
-      },
-    }
-};
-
-module.exports = commonConfig;
-```
+The benefit to this approach is to keep 'locically grouped' configurations together.
 
 ## File Configurations
 
@@ -143,23 +117,23 @@ A detailed look at what is included:
   - publicPath: `/`
   - filename: `isProduction ? '[name].[contenthash:8].js' : '[name].js',`
   - chunkFilename: `isProduction ? '[name].[contenthash:8].js' : '[name].js',`
+  - extensions: `['.js', '.ts', 'jsx', '.tsx', '.json'],`
+  - runtimeChunk: `'single'`
 - Plugins
-  - `mini-css-extract-plugin`
+  - `mini-css-extract-plugin` (for production builds)
 - Loaders
   - `babel-loader`
   - `css-loader`
   - `postcss-loader` (with `autoprefixer`)
-  - `sass-loader` (depends on `sass` and `dart-sass`)
-  - `style-loader`
-  - `mini-css-extract-plugin.loader`
+  - `sass-loader` (depends on `sass`)
+  - `style-loader` (for development builds)
+  - `mini-css-extract-plugin.loader` (for production builds)
   - `asset/inline` (images)
   - `asset/resource` (fonts)
 
 ## Notes
 
-My personal preferences for custom webpack configurations when extending this library:
-
-### Custom App:
+My personal preferences for how I configure and group per-app custom configurations when extending this library:
 
 **`webpack.dev.js`** - Development Server Configurations and Linting Plugins
 

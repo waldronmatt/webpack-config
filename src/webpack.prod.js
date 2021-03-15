@@ -8,7 +8,10 @@ const productionConfig = {
   optimization: {
     minimize: true,
     minimizer: [
-      // for webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`)
+      /* 
+        for webpack@5 you can use the `...` syntax
+        to extend existing minimizers (i.e. `terser-webpack-plugin`)
+      */
       '...',
       new CssMinimizerPlugin(),
       new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }),

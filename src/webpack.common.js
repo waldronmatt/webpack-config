@@ -1,11 +1,14 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const commonConfig = (isProduction) => {
-  // because css and sass files share similar loader configs, let's build it here and call it
+const commonConfig = isProduction => {
+  /* 
+    because css and sass files share similar loader configs,
+    let's build it here and call it
+  */
   const styleLoaders = [
     {
       loader: isProduction
-        ? // extracts the compiled css from js (overrides default Webpack behavior)
+        ? // extracts the compiled css from js (overrides default behavior)
           MiniCssExtractPlugin.loader
         : // inject CSS into the DOM
           'style-loader',
@@ -14,12 +17,7 @@ const commonConfig = (isProduction) => {
     {
       loader: 'css-loader',
     },
-    /*
-      loader for webpack to process css with PostCSS
-      postcss-loader should be placed after css-loader and style-loader,
-      but before other preprocessor loaders like e.g sass|less|stylus-loader
-      https://github.com/webpack-contrib/postcss-loader#config-cascade
-    */
+    // enables autoprefixer and next-gen css/polyfill features
     {
       loader: 'postcss-loader',
     },
@@ -34,13 +32,16 @@ const commonConfig = (isProduction) => {
 
   return {
     output: {
-      // specifies the public URL of the output directory when referenced in a browser.
+      // specifies the public URL of the output directory via a browser
       publicPath: '/',
       filename: isProduction ? '[name].[contenthash:8].js' : '[name].js',
       // specify chunck path for code splitted files
       chunkFilename: isProduction ? '[name].[contenthash:8].js' : '[name].js',
     },
-    // change defaults to accept other file types should we use additional loaders when extending
+    /* 
+      change defaults to accept other file types
+      should we use additional loaders when extending
+    */
     resolve: {
       extensions: ['.js', '.ts', 'jsx', '.tsx', '.json'],
     },
@@ -63,6 +64,10 @@ const commonConfig = (isProduction) => {
           test: /\.(js|ts)$/,
           enforce: 'pre',
           use: [
+            /* 
+              useful when using 3rd-party libraries
+              having their own source maps
+            */
             {
               loader: 'source-map-loader',
             },
@@ -77,12 +82,12 @@ const commonConfig = (isProduction) => {
             },
           ],
         },
-        // asset/inline exports a data URI of the asset. Previously achievable by using url-loader
+        // exports a data URI of the asset. Previously url-loader
         {
           test: /\.(jpe?g|png|gif|svg|webp)$/,
           type: 'asset/inline',
         },
-        // asset/resource emits a separate file and exports the URL. Previously achievable by using file-loader
+        // emits a separate file and exports the URL. Previously file-loader
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/,
           type: 'asset/resource',
@@ -94,7 +99,8 @@ const commonConfig = (isProduction) => {
       .filter(Boolean),
     optimization: {
       /*
-        The value 'single' instead creates a runtime file to be shared for all generated chunks.
+        The value 'single' instead creates a runtime file
+        to be shared for all generated chunks.
         https://webpack.js.org/guides/caching/#extracting-boilerplate
 
         Required to get multiple entry chunks to hmr with webpack-dev-server

@@ -132,6 +132,7 @@ A detailed look at what is included:
   - `mini-css-extract-plugin.loader` (for production builds)
   - `asset/inline` (images)
   - `asset/resource` (fonts)
+  - `source-map-loader`
 
 ## Notes
 

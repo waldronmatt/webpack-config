@@ -60,6 +60,15 @@ const commonConfig = (isProduction) => {
           ]),
         },
         {
+          test: /\.(js|ts)$/,
+          enforce: 'pre',
+          use: [
+            {
+              loader: 'source-map-loader',
+            },
+          ],
+        },
+        {
           test: /\.js$/,
           exclude: /node_modules/,
           use: [

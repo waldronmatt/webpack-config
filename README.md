@@ -10,7 +10,7 @@ You can add and/or override defaults with your own configurations.
 
 ## Features
 
-- Load JavaScript, CSS, Sass, Font, and Image Files
+- Load JavaScript, TypeScript, CSS, Sass, Font, and Image Files
 - Optimization defaults for development builds
 - Minification for production builds
 
@@ -125,6 +125,7 @@ A detailed look at what is included:
   - `mini-css-extract-plugin` (for production builds)
 - Loaders
   - `babel-loader`
+  - `ts-loader`
   - `css-loader`
   - `postcss-loader` (with `autoprefixer`)
   - `sass-loader` (depends on `sass`)
@@ -142,7 +143,7 @@ My personal preferences for how I configure and group per-app custom configurati
 
 **`webpack.prod.js`** - Code Splitting Optimizations (splitchunks, tree-shaking, etc.)
 
-**`webpack.common.js`** - Entry Points, Output Path Resolution, HtmlWebpackPlugin Configurations, and Misc. (extra loaders, plugins, etc.)
+**`webpack.common.js`** - Entry Points, Output Path Resolution, HtmlWebpackPlugin Configurations, extra Plugins, and misc.
 
 ## Contributing
 

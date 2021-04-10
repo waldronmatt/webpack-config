@@ -82,6 +82,23 @@ const commonConfig = isProduction => {
             },
           ],
         },
+        {
+          test: /\.ts$/,
+          exclude: /node_modules/,
+          use: [
+            {
+              loader: 'babel-loader',
+            },
+            {
+              loader: 'ts-loader',
+              options: {
+                // improve the build time
+                transpileOnly: true,
+                experimentalWatchApi: true,
+              },
+            },
+          ],
+        },
         // exports a data URI of the asset. Previously url-loader
         {
           test: /\.(jpe?g|png|gif|svg|webp)$/,

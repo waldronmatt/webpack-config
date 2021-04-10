@@ -17,7 +17,7 @@ const commonConfig = isProduction => {
     {
       loader: 'css-loader',
     },
-    // enables autoprefixer and next-gen css/polyfill features
+    // enables autoprefixer and next-gen CSS polyfill features
     {
       loader: 'postcss-loader',
     },
@@ -38,10 +38,7 @@ const commonConfig = isProduction => {
       // specify chunck path for code splitted files
       chunkFilename: isProduction ? '[name].[contenthash:8].js' : '[name].js',
     },
-    /* 
-      change defaults to accept other file types
-      should we use additional loaders when extending
-    */
+    // change defaults to accept other file types
     resolve: {
       extensions: ['.js', '.ts', 'jsx', '.tsx', '.json'],
     },
@@ -110,8 +107,8 @@ const commonConfig = isProduction => {
           type: 'asset/resource',
         },
         /*
-          Append '?raw' to imports to process files as a string:
-          import myModule from 'my-module?raw';
+          process files as a string. Previously file-loader
+          Usage: import myModule from 'my-module?raw';
         */
         {
           resourceQuery: /raw/,
@@ -119,9 +116,7 @@ const commonConfig = isProduction => {
         },
       ],
     },
-    plugins: [isProduction ? miniCssExtract() : false]
-      // remove empty elements from config (a.k.a. miniCssExtract in dev mode)
-      .filter(Boolean),
+    plugins: [isProduction ? miniCssExtract() : false].filter(Boolean),
     optimization: {
       /*
         The value 'single' instead creates a runtime file

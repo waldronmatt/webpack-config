@@ -109,6 +109,14 @@ const commonConfig = isProduction => {
           test: /\.(woff|woff2|eot|ttf|otf)$/,
           type: 'asset/resource',
         },
+        /*
+          Append '?raw' to imports to process files as a string:
+          import myModule from 'my-module?raw';
+        */
+        {
+          resourceQuery: /raw/,
+          type: 'asset/source',
+        },
       ],
     },
     plugins: [isProduction ? miniCssExtract() : false]
